@@ -162,7 +162,6 @@ func main() {
 				waitgroup.Add(1)
 				go saveData([]byte(<-ch), x)
 			}
-			// time.Sleep(2 * time.Second)
 		}
 	}
 	waitgroup.Wait()
