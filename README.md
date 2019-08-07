@@ -7,6 +7,14 @@
 
 fetch [Path of Exile API](https://www.pathofexile.com/developer/docs/api-resources) with golang
 
+## Requirements
+
+* PostgreSQL
+* github.com/jmoiron/sqlx
+* github.com/joho/godotenv
+* github.com/joho/godotenv/autoload
+* github.com/lib/pq
+
 ## Installation
 
 ```bash
