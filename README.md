@@ -1,6 +1,6 @@
 # poe-api-go
 
-Foobar is a Python library for dealing with word pluralization.
+fetch [Path of Exile API](https://www.pathofexile.com/developer/docs/api-resources) with golang
 
 ## Installation
 
