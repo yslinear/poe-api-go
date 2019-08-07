@@ -26,6 +26,8 @@ go get github.com/lib/pq
 
 ## Usage
 
+rename `env.example` to `.env`
+
 ```bash
 go run main.go
 ```
