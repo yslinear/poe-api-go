@@ -11,6 +11,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jasonlvhit/gocron"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	_ "github.com/joho/godotenv/autoload"
@@ -124,7 +125,10 @@ func saveData(body []byte, x int) {
 		}
 
 		elapsed := time.Since(StartTime)
-		fmt.Printf("[%v/3][%5v/15000] time: %v\n", x, rank, elapsed)
+		if int(temp["rank"].(float64))%1500 == 0 {
+			fmt.Printf("[%v/3][%5v/15000] time: %v\n", x, rank, elapsed)
+		}
+
 	}
 	waitgroup.Done()
 }
@@ -138,12 +142,7 @@ func MakeRequest(client http.Client, url string, ch chan<- string) {
 	time.Sleep(1 * time.Second)
 }
 
-//StartTime time
-var StartTime = time.Now()
-
-var waitgroup sync.WaitGroup
-
-func main() {
+func refreshData() {
 	for x := 0; x < 4; x++ {
 		var urls []string
 		urlLeague := []string{
@@ -166,4 +165,29 @@ func main() {
 		}
 	}
 	waitgroup.Wait()
+	fmt.Println("refresh over")
+}
+
+func testF() {
+
+	currentTime := time.Now()
+	timeStampString := currentTime.Format("2006-01-02 15:04:05")
+	layOut := "2006-01-02 15:04:05"
+	timeStamp, _ := time.Parse(layOut, timeStampString)
+	hr, min, sec := timeStamp.Clock()
+
+	if min%10 == 0 {
+		fmt.Println(strconv.Itoa(hr) + ":" + strconv.Itoa(min) + ":" + fmt.Sprintf("%2d", sec) + " [start refresh]")
+		refreshData()
+	}
+}
+
+//StartTime time
+var StartTime = time.Now()
+var waitgroup sync.WaitGroup
+
+func main() {
+	s := gocron.NewScheduler()
+	s.Every(1).Minute().Do(testF)
+	<-s.Start()
 }
