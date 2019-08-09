@@ -187,6 +187,7 @@ var StartTime = time.Now()
 var waitgroup sync.WaitGroup
 
 func main() {
+	fmt.Println("[start scheduler]")
 	s := gocron.NewScheduler()
 	s.Every(1).Minute().Do(testF)
 	<-s.Start()
