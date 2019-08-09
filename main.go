@@ -143,6 +143,7 @@ func MakeRequest(client http.Client, url string, ch chan<- string) {
 }
 
 func refreshData() {
+	StartTime = time.Now()
 	for x := 0; x < 4; x++ {
 		var urls []string
 		urlLeague := []string{
@@ -165,7 +166,7 @@ func refreshData() {
 		}
 	}
 	waitgroup.Wait()
-	fmt.Println("refresh over")
+	fmt.Println("[refresh over]")
 }
 
 func testF() {
@@ -177,7 +178,7 @@ func testF() {
 	hr, min, sec := timeStamp.Clock()
 
 	if min%10 == 0 {
-		fmt.Println(strconv.Itoa(hr) + ":" + strconv.Itoa(min) + ":" + fmt.Sprintf("%2d", sec) + " [start refresh]")
+		fmt.Println("[time:" + strconv.Itoa(hr) + ":" + strconv.Itoa(min) + ":" + fmt.Sprintf("%2d", sec) + "] [start refresh]")
 		refreshData()
 	}
 }
