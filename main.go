@@ -135,6 +135,7 @@ func MakeRequest(client http.Client, url string, ch chan<- string) {
 	response, _ := client.Do(reqest)
 	body, _ := ioutil.ReadAll(response.Body)
 	ch <- string(body)
+	time.Sleep(1 * time.Second)
 }
 
 //StartTime time
